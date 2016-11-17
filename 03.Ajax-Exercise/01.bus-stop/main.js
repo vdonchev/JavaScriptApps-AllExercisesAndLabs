@@ -16,7 +16,7 @@ function getInfo() {
         stopName.text(data.name);
         busses.empty();
         for (let bus of Object.keys(data.buses)) {
-            let busInfo = `Bus ${bus} arrives in ${data.buses[bus]}`;
+            let busInfo = `Bus ${bus} arrives in ${data.buses[bus]} minutes`;
             $('<li>').text(busInfo).appendTo(busses);
         }
     }

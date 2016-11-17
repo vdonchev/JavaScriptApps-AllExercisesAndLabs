@@ -1,5 +1,5 @@
 function attachEvents() {
-    const apiUrl = 'https://phonebook-nakov.firebaseio.com/phonebook/';
+    const apiUrl = 'https://phonebook-nakov.firebaseio.com/phonebook';
     let phoneBook = $('#phonebook');
 
     $('#btnLoad').on('click', loadPhoneNumbers);
@@ -18,19 +18,20 @@ function attachEvents() {
         let keys = Object.keys(data);
         for (let key of keys) {
             let number = data[key];
-            $('<li>')
+            let li = $('<li>')
                 .text(`${number.person}: ${number.phone} `)
                 .append($('<button>')
                     .text('[Delete]')
-                    .on('click', () => deleteEntry(key)))
-                .appendTo(phoneBook);
+                    .on('click', () => deleteEntry(key)));
+
+            $('#phonebook').append(li);
         }
     }
 
     function deleteEntry(id) {
         $.ajax({
             method: 'DELETE',
-            url: apiUrl + id + '.json',
+            url: apiUrl + '/' + id + '.json',
             success: loadPhoneNumbers
         })
     }

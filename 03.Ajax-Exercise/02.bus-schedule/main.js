@@ -3,8 +3,6 @@ function solve() {
     let currentStop = 'depot';
     let nextStop = 'depot';
 
-    let info = $('#info');
-
     function depart() {
         toggleButtons('#arrive', '#depart');
         $.ajax({
@@ -12,7 +10,7 @@ function solve() {
             url: apiUrl + currentStop + '.json',
             success: function (data) {
                 nextStop = data.next;
-                info.text(`Next stop ${data.name}`);
+                $('#info').find('span').text(`Next stop ${data.name}`);
             }
         });
     }
@@ -23,7 +21,7 @@ function solve() {
             method: 'GET',
             url: apiUrl + currentStop + '.json',
             success: function (data) {
-                info.text(`Arriving at ${data.name}`);
+                $('#info').find('span').text(`Arriving at ${data.name}`);
                 currentStop = nextStop;
             }
         });
