@@ -51,6 +51,7 @@ function attachEvents() {
 
     function renderComments(comments) {
         let commentsList = $('#post-comments');
+        commentsList.empty();
         for (let comment of comments) {
             commentsList.append(createListItem(comment.text));
         }
