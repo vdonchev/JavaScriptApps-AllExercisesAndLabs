@@ -1,20 +1,27 @@
 function loadRepos() {
-    $("#repos").empty();
-    let url = "https://api.github.com/users/" +
-        $("#username").val() + "/repos";
-    $.ajax({ url,
-        success: displayRepos,
-        error: displayError
-    });
-    function displayRepos(respos) {
-        for (let repo of respos) {
-            let link = $('<a>').text(repo.full_name);
-            link.attr('href', repo.html_url);
-            $("#repos").append($('<li>').append(link));
+    $('#repos').empty();
+    let username = $('#username').val();
+    let request = {
+        method: 'GET',
+        url: 'https://api.github.com/users/' + username + '/repos',
+        success: renderRepositories,
+        error: renderErrorMessage
+    };
+
+    return $.ajax(request);
+
+    function renderRepositories(repositories) {
+        for (let repo of repositories) {
+            let listItem = $('<li>')
+                .append($('<a>')
+                    .attr('href', repo.html_url)
+                    .text(repo.full_name));
+
+            listItem.appendTo($('#repos'));
         }
     }
-    function displayError(err) {
-        $("#repos").append($("<li>Error</li>"));
-    }
 
+    function renderErrorMessage() {
+        $('<li>').text('Error').appendTo($('#repos'));
+    }
 }

@@ -10,7 +10,7 @@ function attachEvents() {
     bindEvents();
 
     // CRUD
-    function addCatch() {
+    function createCatch() {
         let data = parseInputData('#addForm');
         if (data) {
             $.post({
@@ -19,12 +19,12 @@ function attachEvents() {
                 data,
                 contentType: 'application/json'
             })
-                .then(loadCatches)
+                .then(readCatches)
                 .catch(renderError);
         }
     }
 
-    function loadCatches() {
+    function readCatches() {
         $.get({
             url: apiUrl,
             headers: authorizationHeader
@@ -43,7 +43,7 @@ function attachEvents() {
                 data: data,
                 contentType: 'application/json'
             })
-                .then(loadCatches)
+                .then(readCatches)
                 .catch(renderError);
         }
     }
@@ -54,7 +54,7 @@ function attachEvents() {
             url: apiUrl + id,
             headers: authorizationHeader
         })
-            .then(loadCatches)
+            .then(readCatches)
             .catch(renderError);
     }
 
@@ -142,8 +142,8 @@ function attachEvents() {
     }
 
     function bindEvents() {
-        $('#aside').find('button.load').on('click', loadCatches);
-        $('#addForm').find('button.add').on('click', addCatch);
+        $('#aside').find('button.load').on('click', readCatches);
+        $('#addForm').find('button.add').on('click', createCatch);
     }
 
     function renderError(error) {
